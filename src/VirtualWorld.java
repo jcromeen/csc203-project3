@@ -50,7 +50,7 @@ public final class VirtualWorld extends PApplet {
         this.view = new WorldView(VIEW_ROWS, VIEW_COLS, this, world, TILE_WIDTH, TILE_HEIGHT);
         this.scheduler = new EventScheduler();
         this.startTimeMillis = System.currentTimeMillis();
-        this.scheduleActions(world, imageStore);
+        this.scheduleActions(world, scheduler, imageStore);
     }
 
     public void draw() {
@@ -78,9 +78,9 @@ public final class VirtualWorld extends PApplet {
 
     }
 
-    public void scheduleActions(WorldModel world, ImageStore imageStore) {
+    public void scheduleActions(WorldModel world, EventScheduler eventScheduler, ImageStore imageStore) {
         for (Entity entity : world.entities) {
-            entity.scheduleActions(entity, world, imageStore);
+            entity.scheduleActions(world, imageStore, eventScheduler);
         }
     }
 

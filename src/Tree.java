@@ -34,7 +34,7 @@ public final class Tree extends Entity {
         return transformTree(world, scheduler, imageStore);
     }
 
-    public void executeTreeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
+    public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
 
         if (!transformPlant(world, scheduler, imageStore)) {
 
@@ -42,14 +42,8 @@ public final class Tree extends Entity {
         }
     }
 
-    public void scheduleActions(Entity entity, WorldModel world, ImageStore imageStore, EventScheduler eventScheduler) {
-        eventScheduler.scheduleEvent(entity, Activity.createActivityAction(entity, world, imageStore), entity.actionPeriod);
-        eventScheduler.scheduleEvent(entity, Animation.createAnimationAction(entity, 0), entity.getAnimationPeriod());
-    }
-
-    public void executeAction(EventScheduler scheduler) {
-        if (this instanceof Tree) {
-            this.executeTreeActivity(world, imageStore, scheduler);
-        }
+    public void scheduleActions(WorldModel world, ImageStore imageStore, EventScheduler eventScheduler) {
+        eventScheduler.scheduleEvent(this, Activity.createActivityAction(this, world, imageStore), this.actionPeriod);
+        eventScheduler.scheduleEvent(this, Animation.createAnimationAction(this, 0), this.getAnimationPeriod());
     }
 }

@@ -36,7 +36,7 @@ public final class Sapling extends Entity {
             world.removeEntity(scheduler, this);
 
             world.addEntity(tree);
-            this.scheduleActions(tree, world, imageStore, scheduler);
+            tree.scheduleActions(world, imageStore, scheduler);
 
             return true;
         }
@@ -44,21 +44,15 @@ public final class Sapling extends Entity {
         return false;
     }
 
-    public void executeSaplingActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
+    public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
         this.health++;
         if (!transformPlant(world, scheduler, imageStore)) {
             scheduler.scheduleEvent(this, Activity.createActivityAction(this, world, imageStore), this.actionPeriod);
         }
     }
 
-    public void scheduleActions(Entity entity, WorldModel world, ImageStore imageStore, EventScheduler eventScheduler) {
-        eventScheduler.scheduleEvent(entity, Activity.createActivityAction(entity, world, imageStore), entity.actionPeriod);
-        eventScheduler.scheduleEvent(entity, Animation.createAnimationAction(entity, 0), entity.getAnimationPeriod());
-    }
-
-    public void executeAction(EventScheduler scheduler) {
-        if (this instanceof Sapling) {
-            this.executeSaplingActivity(world, imageStore, scheduler);
-        }
+    public void scheduleActions(WorldModel world, ImageStore imageStore, EventScheduler eventScheduler) {
+        eventScheduler.scheduleEvent(this, Activity.createActivityAction(this, world, imageStore), this.actionPeriod);
+        eventScheduler.scheduleEvent(this, Animation.createAnimationAction(this, 0), this.getAnimationPeriod());
     }
 }

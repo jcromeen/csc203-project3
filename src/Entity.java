@@ -53,12 +53,12 @@ public class Entity {
         this.imageIndex = this.imageIndex + 1;
     }
 
-    public void scheduleActions(Entity entity, WorldModel world, ImageStore imageStore){
-        throw new UnsupportedOperationException(String.format("scheduleActions not supported for %s", entity.getClass()));
+    public void scheduleActions(WorldModel world, ImageStore imageStore, EventScheduler eventScheduler){
+        ;
     }
 
-    public void executeAction(EventScheduler scheduler) {
-        throw new UnsupportedOperationException(String.format("executeActivityAction not supported for %s", this.getClass()));
+    public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
+        ;
     }
 
     public String log(){

@@ -16,7 +16,7 @@ public final class Obstacle extends Entity {
         return new Obstacle(id, position, images, 0, 0, 0, animationPeriod, 0, 0);
     }
 
-    public void scheduleActions(Entity entity, EventScheduler eventScheduler) {
-        eventScheduler.scheduleEvent(entity, Animation.createAnimationAction(entity, 0), entity.getAnimationPeriod());
+    public void scheduleActions(WorldModel world, ImageStore imageStore, EventScheduler eventScheduler) {
+        eventScheduler.scheduleEvent(this, Animation.createAnimationAction(this, 0), this.getAnimationPeriod());
     }
 }

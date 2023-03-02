@@ -19,6 +19,6 @@ public final class Activity implements Action {
     }
 
     public void executeAction(EventScheduler scheduler) {
-        throw new UnsupportedOperationException(String.format("executeActivityAction not supported for %s", entity.getClass()));
+        entity.executeActivity(world, imageStore, scheduler);
     }
 }

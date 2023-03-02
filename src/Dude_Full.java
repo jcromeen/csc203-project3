@@ -52,7 +52,7 @@ public final class Dude_Full extends Entity {
         world.removeEntity(scheduler, this);
 
         world.addEntity(dude);
-        this.scheduleActions(dude, world, imageStore, scheduler);
+        dude.scheduleActions(world, imageStore, scheduler);
     }
 
     public void executeDudeFullActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
@@ -65,14 +65,8 @@ public final class Dude_Full extends Entity {
         }
     }
 
-    public void scheduleActions(Entity entity, WorldModel world, ImageStore imageStore, EventScheduler eventScheduler) {
-        eventScheduler.scheduleEvent(entity, Activity.createActivityAction(entity, world, imageStore), entity.actionPeriod);
-        eventScheduler.scheduleEvent(entity, Animation.createAnimationAction(entity, 0), entity.getAnimationPeriod());
-    }
-
-    public void executeAction(EventScheduler scheduler) {
-        if (this instanceof Dude_Full) {
-            this.executeDudeFullActivity(world, imageStore, scheduler);
-        }
+    public void scheduleActions(WorldModel world, ImageStore imageStore, EventScheduler eventScheduler) {
+        eventScheduler.scheduleEvent(this, Activity.createActivityAction(this, world, imageStore), this.actionPeriod);
+        eventScheduler.scheduleEvent(this, Animation.createAnimationAction(this, 0), this.getAnimationPeriod());
     }
 }

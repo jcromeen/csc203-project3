@@ -46,7 +46,7 @@ public final class Fairy extends Entity {
         }
     }
 
-    public void executeFairyActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
+    public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
         Optional<Entity> fairyTarget = world.findNearest(this.position, new ArrayList<>(List.of(Stump.class)));
 
         if (fairyTarget.isPresent()) {
@@ -57,21 +57,15 @@ public final class Fairy extends Entity {
                 Sapling sapling = Sapling.createSapling(Functions.SAPLING_KEY + "_" + fairyTarget.get().id, tgtPos, imageStore.getImageList(Functions.SAPLING_KEY), 0);
 
                 world.addEntity(sapling);
-                this.scheduleActions(sapling, world, imageStore, scheduler);
+                sapling.scheduleActions(world, imageStore, scheduler);
             }
         }
 
         scheduler.scheduleEvent(this, Activity.createActivityAction(this, world, imageStore), this.actionPeriod);
     }
 
-    public void scheduleActions(Entity entity, WorldModel world, ImageStore imageStore, EventScheduler eventScheduler) {
-        eventScheduler.scheduleEvent(entity, Activity.createActivityAction(entity, world, imageStore), entity.actionPeriod);
-        eventScheduler.scheduleEvent(entity, Animation.createAnimationAction(entity, 0), entity.getAnimationPeriod());
-    }
-
-    public void executeAction(EventScheduler scheduler) {
-        if (this instanceof Fairy) {
-            this.executeFairyActivity(world, imageStore, scheduler);
-        }
+    public void scheduleActions(WorldModel world, ImageStore imageStore, EventScheduler eventScheduler) {
+        eventScheduler.scheduleEvent(this, Activity.createActivityAction(this, world, imageStore), this.actionPeriod);
+        eventScheduler.scheduleEvent(this, Animation.createAnimationAction(this, 0), this.getAnimationPeriod());
     }
 }

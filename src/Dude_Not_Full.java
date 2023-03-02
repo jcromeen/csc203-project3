@@ -55,7 +55,7 @@ public final class Dude_Not_Full extends Entity {
             scheduler.unscheduleAllEvents(this);
 
             world.addEntity(dude);
-            this.scheduleActions(dude, world, imageStore, scheduler);
+            dude.scheduleActions(world, imageStore, scheduler);
 
             return true;
         }
@@ -63,21 +63,15 @@ public final class Dude_Not_Full extends Entity {
         return false;
     }
 
-    public void executeDudeNotFullActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
+    public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
         Optional<Entity> target = world.findNearest(this.position, new ArrayList<>(Arrays.asList(Tree.class, Sapling.class)));
 
         if (target.isEmpty() || !moveToNotFull(world, target.get(), scheduler) || !transformNotFull(world, scheduler, imageStore)) {
             scheduler.scheduleEvent(this, Activity.createActivityAction(this, world, imageStore), this.actionPeriod);
         }
     }
-    public void scheduleActions(Entity entity, WorldModel world, ImageStore imageStore, EventScheduler eventScheduler) {
-        eventScheduler.scheduleEvent(entity, Activity.createActivityAction(entity, world, imageStore), entity.actionPeriod);
-        eventScheduler.scheduleEvent(entity, Animation.createAnimationAction(entity, 0), entity.getAnimationPeriod());
-    }
-
-    public void executeAction(EventScheduler scheduler) {
-        if (this instanceof Dude_Not_Full) {
-            this.executeDudeNotFullActivity(world, imageStore, scheduler);
-        }
+    public void scheduleActions(WorldModel world, ImageStore imageStore, EventScheduler eventScheduler) {
+        eventScheduler.scheduleEvent(this, Activity.createActivityAction(this, world, imageStore), this.actionPeriod);
+        eventScheduler.scheduleEvent(this, Animation.createAnimationAction(this, 0), this.getAnimationPeriod());
     }
 }
